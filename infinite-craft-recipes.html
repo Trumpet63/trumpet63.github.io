@@ -8,7 +8,7 @@
 <body>
     <div id="get-recipe-div">
         <div id="get-recipe-input-div">
-            <input id="get-recipe-input" type="text">
+            <input id="get-recipe-input" type="text" onkeydown="onGetRecipeInputKeyDown(event)">
             <button onclick="onGetRecipe()">Get Recipe</button>
         </div>
         <div id="recipe-steps-div">

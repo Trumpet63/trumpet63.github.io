@@ -1,15 +1,18 @@
+function onGetRecipeInputKeyDown(event) {
+    if (event.code === "Enter") {
+        onGetRecipe();
+    }
+}
 
 function onGetRecipe() {
-    console.log("Got here");
     let recipeInput = document.getElementById("get-recipe-input");
     let input = recipeInput.value;
     let recipe = recipes[input];
+    let recipeDiv = document.getElementById("recipe-steps-div");
+    recipeDiv.innerHTML = "";
     if (recipe === undefined) {
-        // TODO: Error message
-        console.error("Couldn't find a recipe for " + input);
+        recipeDiv.innerText = "No recipe found";
     } else {
-        let recipeDiv = document.getElementById("recipe-steps-div");
-        recipeDiv.innerHTML = "";
         for (let i = 0; i < recipe.length; i++) {
             let step = recipe[i];
             let firstText = step[0];
