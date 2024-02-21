@@ -68,3 +68,9 @@ body {
     align-items: center;
     width: auto;
 }
+
+footer {
+    text-align: left;
+    position: fixed;
+    bottom: 0;
+}
