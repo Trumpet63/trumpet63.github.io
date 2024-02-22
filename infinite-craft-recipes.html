@@ -6,19 +6,17 @@
     <link rel="stylesheet" href="infinite-craft-recipes.css">
 </head>
 <body>
-    <h3>Full Step-By-Step Recipes For Infinite Craft</h3>
     <div id="get-recipe-div">
         <div id="get-recipe-input-div">
-            <input id="get-recipe-input" type="text" onkeydown="onGetRecipeInputKeyDown(event)">
+            <input id="get-recipe-input" type="text" autocomplete="off" onkeydown="onGetRecipeInputKeyDown(event)" oninput="onGetRecipeInputInput()">
             <button onclick="onGetRecipe()">Get Recipe</button>
+            <div id="get-recipe-suggestions"></div>
         </div>
-        <div id="recipe-steps-div">
-
-        </div>
+        <div id="recipe-steps-div"></div>
     </div>
 </body>
 <footer>
-    <h6>v0.03<br>Not affiliated with Infinite Craft</h6>
+    <h6>v0.04<br>Not affiliated with Infinite Craft</h6>
 </footer>
 <script type="text/javascript" src="infinite-craft-recipes-objects.js"></script>
 <script type="text/javascript" src="infinite-craft-recipes-recipes.js"></script>

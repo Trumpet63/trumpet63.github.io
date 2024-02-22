@@ -1,7 +1,56 @@
 function onGetRecipeInputKeyDown(event) {
     if (event.code === "Enter") {
+        let div = document.getElementById("get-recipe-suggestions");
+        div.innerHTML = "";
+        div.className = "";
+
+        let suggestions = getSuggestions();
+
+        // do auto-capitalization if the first suggestion is case-insensitively identical
+        let recipeInput = document.getElementById("get-recipe-input");
+        let input = recipeInput.value.toString();
+        if (input.toLowerCase() === suggestions[0].toLowerCase()) {
+            recipeInput.value = suggestions[0];
+        }
+
         onGetRecipe();
     }
+}
+
+function onGetRecipeInputInput() {
+    let suggestions = getSuggestions();
+    let div = document.getElementById("get-recipe-suggestions");
+    div.innerHTML = "";
+    div.className = "";
+    if (suggestions.length > 0) {
+        div.classList.add("suggestions-visible")
+        let list = document.createElement("ul");
+        for (let i = 0; i < suggestions.length; i++) {
+            let item = document.createElement("li");
+            item.innerText = suggestions[i];
+            list.appendChild(item);
+        }
+        div.appendChild(list);
+    }
+}
+
+function getSuggestions() {
+    let suggestions = [];
+    let recipeInput = document.getElementById("get-recipe-input");
+    let input = recipeInput.value.toString().toLowerCase();
+    if (input.length < 1) {
+        return []
+    }
+
+    // Find suggestions by prefix, case-insensitive 
+    let allObjectNames = Object.keys(objects);
+    for (let i = 0; i < allObjectNames.length; i++) {
+        if (allObjectNames[i].toLowerCase().startsWith(input)) {
+            suggestions.push(allObjectNames[i]);
+        }
+    }
+    suggestions.sort((a, b) => a.length - b.length);
+    return suggestions.slice(0, 10);
 }
 
 function onGetRecipe() {
