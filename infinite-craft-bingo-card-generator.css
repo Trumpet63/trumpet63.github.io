@@ -1,0 +1,65 @@
+#container-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+#difficulty-column-container{
+    flex-direction: column;
+}
+
+#difficulty-toggle-label {
+    text-align: center;
+    padding: 5px;
+}
+
+#difficulty-toggle-div{
+    
+}
+
+#difficulty-toggle {
+    /* Hide default dropdown arrow */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    
+    padding: 5px;
+    width: 100px;
+    overflow: hidden;
+    /* height: 574px; */
+}
+
+#difficulty-toggle option {
+    text-align: center;
+}
+
+#difficulty-toggle option:checked {
+    background-color: lightblue;
+}
+
+#card {
+    display: inline-block;
+    border: 2px solid #000;
+    padding: 10px;
+}
+
+.bingo-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.bingo-cell {
+    width: 100px;
+    height: 100px;
+    border: 1px solid #000;
+    box-sizing: border-box;
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+

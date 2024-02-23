@@ -1,18 +1,5 @@
 function onGetRecipeInputKeyDown(event) {
     if (event.code === "Enter") {
-        let div = document.getElementById("get-recipe-suggestions");
-        div.innerHTML = "";
-        div.className = "";
-
-        let suggestions = getSuggestions();
-
-        // do auto-capitalization if the first suggestion is case-insensitively identical
-        let recipeInput = document.getElementById("get-recipe-input");
-        let input = recipeInput.value.toString();
-        if (input.toLowerCase() === suggestions[0].toLowerCase()) {
-            recipeInput.value = suggestions[0];
-        }
-
         onGetRecipe();
     }
 }
@@ -35,27 +22,64 @@ function onGetRecipeInputInput() {
 }
 
 function getSuggestions() {
-    let suggestions = [];
     let recipeInput = document.getElementById("get-recipe-input");
     let input = recipeInput.value.toString().toLowerCase();
     if (input.length < 1) {
-        return []
+        return [];
     }
+    let maxSuggestions = 10;
+    let suggestions = [];
 
-    // Find suggestions by prefix, case-insensitive 
+    // Find suggestions by prefix, case-insensitive
+    let prefixSuggestions = [];
     let allObjectNames = Object.keys(objects);
     for (let i = 0; i < allObjectNames.length; i++) {
         if (allObjectNames[i].toLowerCase().startsWith(input)) {
-            suggestions.push(allObjectNames[i]);
+            prefixSuggestions.push(allObjectNames[i]);
+            if (prefixSuggestions.length >= maxSuggestions) {
+                break;
+            }
         }
     }
-    suggestions.sort((a, b) => a.length - b.length);
-    return suggestions.slice(0, 10);
+    prefixSuggestions.sort((a, b) => a.length - b.length);
+    suggestions = suggestions.concat(prefixSuggestions);
+
+    // Find more suggestions by substring, case-insensitive
+    let remainingSuggestions = maxSuggestions - suggestions.length;
+    if (remainingSuggestions > 0) {
+        let substringSuggestions = [];
+        for (let i = 0; i < allObjectNames.length; i++) {
+            if (allObjectNames[i].toLowerCase().includes(input)
+                && !prefixSuggestions.includes(allObjectNames[i])
+            ) {
+                substringSuggestions.push(allObjectNames[i]);
+                if (substringSuggestions.length >= remainingSuggestions) {
+                    break;
+                }
+            }
+        }
+        substringSuggestions.sort((a, b) => a.length - b.length);
+        suggestions = suggestions.concat(substringSuggestions);
+    }
+
+    return suggestions;
 }
 
 function onGetRecipe() {
+    // hide suggestions
+    let div = document.getElementById("get-recipe-suggestions");
+    div.innerHTML = "";
+    div.className = "";
+
+    // do auto-capitalization if the first suggestion is case-insensitively identical
+    let suggestions = getSuggestions();
     let recipeInput = document.getElementById("get-recipe-input");
-    let input = recipeInput.value;
+    let input = recipeInput.value.toString();
+    if (input.toLowerCase() === suggestions[0].toLowerCase()) {
+        input = suggestions[0];
+        recipeInput.value = input;
+    }
+
     let recipe = recipes[input];
     let recipeDiv = document.getElementById("recipe-steps-div");
     recipeDiv.innerHTML = "";
@@ -95,6 +119,6 @@ function createObjectElement(text, emoji) {
     span.classList.add("object-span");
     span.innerText = emoji;
     div.appendChild(span);
-    div.innerText += " " + text;
+    div.innerHTML += " " + text + " ";
     return div;
 }
