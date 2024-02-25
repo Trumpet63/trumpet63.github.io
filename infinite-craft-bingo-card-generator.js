@@ -37,10 +37,19 @@ select.size = numSeenDifficulties;
 select.onchange = onDifficultyToggleChange;
 _div.appendChild(select);
 
+let maxCardSize = 6;
+let cellIsMarked = [];
+for (let i = 0; i < maxCardSize; i++) {
+    let row = [];
+    for (let j = 0; j < maxCardSize; j++) {
+        row.push(false);
+    }
+    cellIsMarked.push(row);
+}
+
 generateNewCard();
 
 function onDifficultyToggleChange() {
-    console.log("difficulty toggle changed");
     generateNewCard();
 }
 
@@ -49,41 +58,97 @@ function onRandomizeButtonClick() {
 }
 
 function onSizeSelectChange() {
-    generateNewCard();
+    displayCard();
 }
 
 function onFreeSpaceInput() {
-    generateNewCard();
+    displayCard();
 }
 
 function onShowDifficultyInput() {
     displayCard();
 }
 
+function onShowEmojiInput() {
+    displayCard();
+}
+
+function onClearMarkedCellsButtonClick() {
+    cellIsMarked = [];
+    for (let i = 0; i < maxCardSize; i++) {
+        let row = [];
+        for (let j = 0; j < maxCardSize; j++) {
+            row.push(false);
+        }
+        cellIsMarked.push(row);
+    }
+    displayCard();
+}
+
+function onClickCell(cell, row, column) {
+    cellIsMarked[row][column] = !cellIsMarked[row][column];
+    cell.className = "";
+    cell.classList.add("bingo-cell");
+    if (cellIsMarked[row][column]) {
+        cell.classList.add("marked-cell");
+    }
+}
+
 function generateNewCard() {
     let selectedDifficulties = getToggledDifficulties();
-
+    
     if (selectedDifficulties.length === 0) {
         return;
     }
+    
+    // Always generate the max needed objects so I don't have to
+    // re-randomize when the user changes every option
+    let neededObjects = maxCardSize * maxCardSize;
 
-    // TODO: get card size
-    let cardSize = 5;
+    // If we would have duplicates in the bingo card, add next highest
+    // or next lowest difficulties repeatedly until that's not the case
+    let possibleObjects = 0;
+    for (let i = 0; i < selectedDifficulties.length; i++) {
+        let difficulty = selectedDifficulties[i]
+        possibleObjects += objectsByDifficulty[difficulty].length;
+    }
 
-    // TODO: get free space state
-    let hasFreeSpace = false;
+    if (possibleObjects < neededObjects) {
+        console.log("Just using the selected difficulties would cause duplicates, so I will add a few more difficulties to prevent that.");
+        selectedDifficulties.sort();
+        let maxDifficulty = selectedDifficulties[selectedDifficulties.length - 1]
+        let direction;
+        if (maxDifficulty < 3) {
+            direction = 1;
+        } else  {
+            direction = -1
+        }
+    
+        while (possibleObjects < neededObjects) {
+            selectedDifficulties.sort();
+            let i = selectedDifficulties.length - 1;
+            let currentDifficulty = selectedDifficulties[selectedDifficulties.length - 1];
+            while (currentDifficulty === selectedDifficulties[i]) {
+                currentDifficulty += direction;
+                i += direction;
+            }
+            selectedDifficulties.push(currentDifficulty);
+            possibleObjects += objectsByDifficulty[currentDifficulty].length;
+        }
+    }
 
+    // Add random objects until we have the required number
     currentBingoObjects = [];
-
-    let numObjects = cardSize * cardSize - (hasFreeSpace ? 1 : 0);
     let randomizedObjects = [];
-    for (let i = 0; i < numObjects; i++) {
+    for (let i = 0; i < neededObjects; i++) {
         let difficulty = selectedDifficulties[getRandomInt(selectedDifficulties.length)];
         let possibleObjects = objectsByDifficulty[difficulty];
-
         let object = possibleObjects[getRandomInt(possibleObjects.length)];
+
         let numAttempts = 1;
         while (randomizedObjects.includes(object) && numAttempts < 50) {
+            difficulty = selectedDifficulties[getRandomInt(selectedDifficulties.length)];
+            possibleObjects = objectsByDifficulty[difficulty];
             object = possibleObjects[getRandomInt(possibleObjects.length)];
             numAttempts++;
         }
@@ -104,18 +169,14 @@ function generateNewCard() {
 }
 
 function displayCard() {
-    // TODO: get card size
-    let cardSize = 5;
-    
-    // TODO: get free space state
-    let hasFreeSpace = false;
-
-    // TODO: get show difficulty state
-    let showDifficulty = true;
+    let cardSize = getCardSize();
+    let hasFreeSpace = getFreeSpaceState();
+    let showDifficulty = getShowDifficultyState();
+    let showEmoji = getShowEmojiState();
     
     let div = document.getElementById("card");
     div.innerHTML = "";
-    let freeSpaceIndex = Math.floor(cardSize * cardSize / 2);
+    let freeSpaceIndex = getFreeSpaceIndex(cardSize);
     for (let i = 0; i < cardSize; i++) {
         let row = document.createElement("div");
         row.classList.add("bingo-row");
@@ -123,6 +184,7 @@ function displayCard() {
             let cellIndex = i * cardSize + j;
             let cell = document.createElement("div");
             cell.classList.add("bingo-cell");
+            cell.onclick = () => onClickCell(cell, i, j);
 
             if (hasFreeSpace && cellIndex === freeSpaceIndex) {
                 cell.innerText = "Free Space";
@@ -131,7 +193,11 @@ function displayCard() {
                     cellIndex--;
                 }
                 let object = currentBingoObjects[cellIndex];
-                let cellHTML = object.emoji + " " + object.text;
+                let cellHTML = "";
+                if (showEmoji) {
+                    cellHTML += object.emoji + " ";
+                }
+                cellHTML += object.text;
                 if (showDifficulty) {
                     cellHTML += "<br>Difficulty " + object.difficulty;
                 }
@@ -147,17 +213,12 @@ function displayCard() {
 }
 
 function updateJsonOutput() {
-    // TODO: get card size
-    let cardSize = 5;
+    let cardSize = getCardSize();
+    let hasFreeSpace = getFreeSpaceState();
+    let showDifficulty = getShowDifficultyState();
+    let showEmoji = getShowEmojiState();
 
-    // TODO: get free space state
-    let hasFreeSpace = false;
-
-    // TODO: get show difficulty state
-    let showDifficulty = true;
-
-    let freeSpaceIndex = Math.floor(cardSize * cardSize / 2);
-
+    let freeSpaceIndex = getFreeSpaceIndex(cardSize);
     let outputObjects = [];
     for (let i = 0; i < cardSize * cardSize; i++) {
         let cellIndex = i;
@@ -168,7 +229,11 @@ function updateJsonOutput() {
                 cellIndex--;
             }
             let object = currentBingoObjects[cellIndex];
-            let cellHTML = object.emoji + " " + object.text;
+            let cellHTML = "";
+            if (showEmoji) {
+                cellHTML += object.emoji + " ";
+            }
+            cellHTML += object.text;
             if (showDifficulty) {
                 cellHTML += "\nDifficulty " + object.difficulty;
             }
@@ -181,6 +246,10 @@ function updateJsonOutput() {
     output.innerText = JSON.stringify(outputObjects);
 }
 
+function getFreeSpaceIndex(cardSize) {
+    return Math.floor((cardSize - 1) / 2) * cardSize + Math.floor((cardSize - 1) / 2);
+};
+
 function getToggledDifficulties() {
     let selectedOptions = document.getElementById("difficulty-toggle").selectedOptions;
     let difficulties = [];
@@ -191,15 +260,28 @@ function getToggledDifficulties() {
 }
 
 function getCardSize() {
-    document.getElementById("size");
+    let cardSize = parseInt(
+        document.getElementById("size")
+            .selectedOptions[0]
+            .value
+            .charAt(0)
+    );
+    return cardSize;
 }
 
 function getFreeSpaceState() {
-    document.getElementById("");
+    let freeSpaceChecked = document.getElementById("free-space").checked;
+    return freeSpaceChecked;
 }
 
 function getShowDifficultyState() {
-    document.getElementById("");
+    let showDifficultyChecked = document.getElementById("show-difficulty").checked;
+    return showDifficultyChecked;
+}
+
+function getShowEmojiState() {
+    let showEmojiChecked = document.getElementById("show-emoji").checked;
+    return showEmojiChecked;
 }
 
 // max is exclusive

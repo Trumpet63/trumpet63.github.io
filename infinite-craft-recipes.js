@@ -1,23 +1,134 @@
+let suggestions = [];
+let keyboardSelectedSuggestion = undefined;
+let originalInputText = undefined;
+
 function onGetRecipeInputKeyDown(event) {
-    if (event.code === "Enter") {
-        onGetRecipe();
+    switch (event.code) {
+        case "Enter": {
+            if (keyboardSelectedSuggestion !== undefined) {
+                let recipeInput = document.getElementById("get-recipe-input");
+                recipeInput.value = suggestions[keyboardSelectedSuggestion];
+                displayChangedKeyboardSelection(keyboardSelectedSuggestion, undefined);
+            }
+            getRecipe();
+            break;
+        }
+        case "ArrowUp": {
+            event.preventDefault();
+            if (suggestions.length > 0) {
+                let recipeInput = document.getElementById("get-recipe-input");
+                if (keyboardSelectedSuggestion === undefined) {
+                    originalInputText = recipeInput.value;
+                    keyboardSelectedSuggestion = suggestions.length - 1;
+                    recipeInput.value = suggestions[keyboardSelectedSuggestion];
+                    displayChangedKeyboardSelection(undefined, keyboardSelectedSuggestion);
+                } else {
+                    let previousSelection = keyboardSelectedSuggestion;
+                    keyboardSelectedSuggestion--;
+                    if (keyboardSelectedSuggestion < 0) {
+                        keyboardSelectedSuggestion = undefined;
+                    }
+                    displayChangedKeyboardSelection(previousSelection, keyboardSelectedSuggestion);
+                    if (keyboardSelectedSuggestion === undefined) {
+                        recipeInput.value = originalInputText;
+                    } else {
+                        recipeInput.value = suggestions[keyboardSelectedSuggestion];
+                    }
+                }
+            }
+            break;
+        }
+        case "ArrowDown": {
+            event.preventDefault();
+            if (suggestions.length > 0) {
+                let recipeInput = document.getElementById("get-recipe-input");
+                if (keyboardSelectedSuggestion === undefined) {
+                    originalInputText = recipeInput.value;
+                    keyboardSelectedSuggestion = 0;
+                    recipeInput.value = suggestions[keyboardSelectedSuggestion];
+                    displayChangedKeyboardSelection(undefined, keyboardSelectedSuggestion);
+                } else {
+                    let previousSelection = keyboardSelectedSuggestion;
+                    keyboardSelectedSuggestion++;
+                    if (keyboardSelectedSuggestion >= suggestions.length) {
+                        keyboardSelectedSuggestion = undefined;
+                    }
+                    displayChangedKeyboardSelection(previousSelection, keyboardSelectedSuggestion);
+                    if (keyboardSelectedSuggestion === undefined) {
+                        recipeInput.value = originalInputText;
+                    } else {
+                        recipeInput.value = suggestions[keyboardSelectedSuggestion];
+                    }
+                }
+            }
+            break;
+        }
+        case "ArrowLeft": {
+            if (suggestions.length > 0 && keyboardSelectedSuggestion !== undefined) {
+                event.preventDefault();
+                displayChangedKeyboardSelection(keyboardSelectedSuggestion, undefined);
+                keyboardSelectedSuggestion = undefined;
+                let recipeInput = document.getElementById("get-recipe-input");
+                recipeInput.value = originalInputText;
+                originalInputText = undefined;
+            }
+            break;
+        }
+        case "ArrowRight": {
+            if (suggestions.length > 0 && keyboardSelectedSuggestion !== undefined) {
+                event.preventDefault();
+                displayChangedKeyboardSelection(keyboardSelectedSuggestion, undefined);
+                keyboardSelectedSuggestion = undefined;
+                let recipeInput = document.getElementById("get-recipe-input");
+                recipeInput.value = originalInputText;
+                originalInputText = undefined;
+            }
+            break;
+        }
     }
 }
 
 function onGetRecipeInputInput() {
-    let suggestions = getSuggestions();
+    keyboardSelectedSuggestion = undefined;
+    suggestions = getSuggestions();
     let div = document.getElementById("get-recipe-suggestions");
     div.innerHTML = "";
     div.className = "";
     if (suggestions.length > 0) {
-        div.classList.add("suggestions-visible")
+        div.classList.add("suggestions-visible");
         let list = document.createElement("ul");
         for (let i = 0; i < suggestions.length; i++) {
             let item = document.createElement("li");
+            item.onclick = () => onItemClick(i);
             item.innerText = suggestions[i];
             list.appendChild(item);
         }
         div.appendChild(list);
+    }
+}
+
+function onClickGetRecipeButton() {
+    if (keyboardSelectedSuggestion !== undefined) {
+        let recipeInput = document.getElementById("get-recipe-input");
+        recipeInput.value = suggestions[keyboardSelectedSuggestion];
+        displayChangedKeyboardSelection(keyboardSelectedSuggestion, undefined);
+    }
+    getRecipe();
+}
+
+function onItemClick(suggestionIndex) {
+    suggestions[suggestionIndex]
+    recipeInput.value = suggestions[suggestionIndex];
+    getRecipe();
+}
+
+function displayChangedKeyboardSelection(previous, current) {
+    let suggestionElements = document.getElementById("get-recipe-suggestions").getElementsByTagName("li");
+    if (previous !== undefined) {
+        suggestionElements[previous].className = "";
+    }
+    if (current !== undefined) {
+        suggestionElements[current].className = "suggestions-keyboard-selected";
     }
 }
 
@@ -65,14 +176,14 @@ function getSuggestions() {
     return suggestions;
 }
 
-function onGetRecipe() {
+function getRecipe() {
     // hide suggestions
     let div = document.getElementById("get-recipe-suggestions");
     div.innerHTML = "";
     div.className = "";
 
     // do auto-capitalization if the first suggestion is case-insensitively identical
-    let suggestions = getSuggestions();
+    suggestions = getSuggestions();
     let recipeInput = document.getElementById("get-recipe-input");
     let input = recipeInput.value.toString();
     if (input.toLowerCase() === suggestions[0].toLowerCase()) {
@@ -110,6 +221,11 @@ function onGetRecipe() {
             recipeDiv.appendChild(div);
         }
     }
+
+    // state management stuff
+    keyboardSelectedSuggestion = undefined;
+    originalInputText = undefined;
+    suggestions = [];
 }
 
 function createObjectElement(text, emoji) {

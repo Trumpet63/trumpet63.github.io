@@ -1,3 +1,11 @@
+#container-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding-top: 10px;
+}
+
 #container-row {
     display: flex;
     flex-direction: row;
@@ -60,6 +68,28 @@
     align-items: center;
     justify-content: center;
     text-align: center;
+    user-select: none;
 }
 
+.marked-cell {
+    background-color: rgb(157, 251, 157);
+}
 
+#options {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+#json-output-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+footer {
+    font-size: smaller;
+    text-align: left;
+    position: fixed;
+    bottom: 0;
+}

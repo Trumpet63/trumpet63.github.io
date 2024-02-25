@@ -102,8 +102,12 @@ body {
 }
 
 .suggestions-visible ul li:hover {
-    /* cursor: pointer; */
-    /* background: #eee; */
+    cursor: pointer;
+    background: #eee;
+}
+
+.suggestions-keyboard-selected {
+    background: #eee;
 }
 
 footer {

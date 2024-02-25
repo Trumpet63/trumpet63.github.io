@@ -9,10 +9,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div>
+    <div id="container-column">
         <div id="container-row">
             <div id="difficulty-column-container">
-                <div id="difficulty-toggle-label">Difficulty</div>
+                <div id="difficulty-toggle-label">Difficulties:</div>
                 <div id="difficulty-toggle-div"></div>
             </div>
             <div id="card"></div>
@@ -22,6 +22,7 @@
                 <button onclick="onRandomizeButtonClick()">Randomize</button>
             </div>
             <div>
+                Card size
                 <select id="size" onchange="onSizeSelectChange()">
                     <option>3x3</option>
                     <option>4x4</option>
@@ -37,15 +38,26 @@
                 <input type="checkbox" checked id="show-difficulty" name="show-difficulty" oninput="onShowDifficultyInput()">
                 <label for="show-difficulty">Show difficulty</label>
             </div>
+            <div>
+                <input type="checkbox" checked id="show-emoji" name="show-emoji" oninput="onShowEmojiInput()">
+                <label for="show-emoji">Show emoji</label>
+            </div>
+            <div>
+                <button onclick="onClearMarkedCellsButtonClick()">Clear Marked Cells</button>
+            </div>
         </div>
         <div id="json-output-div">
-            <textarea id="json-output"></textarea>
+            Card contents as JSON:
+            <textarea id="json-output" cols="80" rows="8"></textarea>
         </div>
     </div>
+    <footer>
+        <a href="https://github.com/Trumpet63/trumpet63.github.io">
+            <img src="github-mark.png" width="25" height="25">
+        </a>
+        v0.06 Not affiliated with Infinite Craft
+    </footer>
+    <script type="text/javascript" src="infinite-craft-objects.js?v=0.06"></script>
+    <script type="text/javascript" src="infinite-craft-bingo-card-generator.js?v=0.06"></script>
 </body>
-<footer>
-    <h6>v0.05<br>Not affiliated with Infinite Craft</h6>
-</footer>
-<script type="text/javascript" src="infinite-craft-objects.js?v=0.05"></script>
-<script type="text/javascript" src="infinite-craft-bingo-card-generator.js?v=0.05"></script>
 </html>
