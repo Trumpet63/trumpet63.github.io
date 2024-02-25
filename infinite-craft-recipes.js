@@ -117,7 +117,7 @@ function onClickGetRecipeButton() {
 }
 
 function onItemClick(suggestionIndex) {
-    suggestions[suggestionIndex]
+    let recipeInput = document.getElementById("get-recipe-input");
     recipeInput.value = suggestions[suggestionIndex];
     getRecipe();
 }
