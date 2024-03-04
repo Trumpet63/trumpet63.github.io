@@ -8,20 +8,21 @@ let canvasWidth;
 let canvasHeight;
 let worldWidth;
 let worldHeight;
-let worldTopLeftX;
-let worldTopLeftY;
-let viewChanged = true;
-
-onResize();
 
 let thingXMins = [];
 let thingYMins = [];
 let thingWidth = 100;
 let thingHeight = 20;
-for (let i = 0; i < numObjects; i++) {
+for (let i = 0; i <= numObjects; i++) {
     thingXMins.push(i * thingWidth);
     thingYMins.push(i * thingHeight);
 }
+
+let worldTopLeftX = -thingWidth;
+let worldTopLeftY = -thingHeight;
+let viewChanged = true;
+
+onResize();
 
 window.addEventListener("resize", onResize);
 
@@ -86,18 +87,14 @@ function onResize() {
     canvasHeight = window.innerHeight;
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
-    ctx.strokeStyle = "black";
-    ctx.lineWidth = 1 * scalingFactor;
-
-    ctx.fillStyle = "black";
-    let fontSize = 12 * scalingFactor;
-    ctx.font = "500 normal " + fontSize + "px Roboto, sans-serif";
-
     worldWidth = canvasWidth / scalingFactor;
     worldHeight = canvasHeight / scalingFactor;
-    worldTopLeftX = -worldWidth / 2;
-    worldTopLeftY = -worldHeight / 2;
-    
+
+    // Since changing the canvas dimensions resets the style settings, this
+    // IS actually necessary (though these are probably the default anyways)
+    ctx.strokeStyle = "black";
+    ctx.fillStyle = "black";
+
     viewChanged = true;
 }
 
@@ -156,6 +153,8 @@ function updateView() {
     }
 
     if (thingXStartIndex !== undefined && thingYStartIndex !== undefined) {
+
+        // Draw lines between cells
         for (let i = thingXStartIndex; i <= thingXEndIndex; i++) {
             let x = (thingXMins[i] - worldTopLeftX) * scalingFactor;
             ctx.beginPath();
@@ -163,7 +162,6 @@ function updateView() {
             ctx.lineTo(x, canvasHeight - 1);
             ctx.stroke();
         }
-        
         for (let i = thingYStartIndex; i <= thingYEndIndex; i++) {
             let y = (thingYMins[i] - worldTopLeftY) * scalingFactor;
             ctx.beginPath();
@@ -172,6 +170,15 @@ function updateView() {
             ctx.stroke();
         }
 
+        // Don't try to fill in a cell after the last cell dividing line
+        if (thingXEndIndex === numObjects) {
+            thingXEndIndex = numObjects - 1;
+        }
+        if (thingYEndIndex === numObjects) {
+            thingYEndIndex = numObjects - 1;
+        }
+
+        // Fill in the main cells
         for (let i = thingXStartIndex; i <= thingXEndIndex; i++) {
             let x = (thingXMins[i] - worldTopLeftX + thingWidth / 2) * scalingFactor;
             for (let j = thingYStartIndex; j <= thingYEndIndex; j++) {
@@ -186,6 +193,7 @@ function updateView() {
             }
         }
 
+        // Fill the background of the frozen row and column
         ctx.fillStyle = "rgb(235, 235, 235)"
         let thingCanvasWidth = thingWidth * scalingFactor - 2 * ctx.lineWidth;
         let thingCanvasHeight = thingHeight * scalingFactor - 2 * ctx.lineWidth;
@@ -200,21 +208,25 @@ function updateView() {
 
         ctx.fillStyle = "black";
         
+        // Draw the frozen top row
         ctx.textBaseline = "middle";
         let y = (thingHeight / 2) * scalingFactor;
+        console.log("thingXIndices", thingXStartIndex, thingXEndIndex);
         for (let i = thingXStartIndex; i <= thingXEndIndex; i++) {
-            text = getGridContents(i + 1, 0);
+            text = getGridContents(0, i + 1);
+            console.log("getGridContents", i + 1, 0);
             if (text !== undefined) {
                 let x = (thingXMins[i] - worldTopLeftX + thingWidth / 2) * scalingFactor;
                 ctx.fillText(text, x, y);
             }
         }
         
+        // Draw the frozen left column
         ctx.textAlign = "right";
         ctx.textBaseline = "middle";
         let x = (thingWidth - thingHeight / 2) * scalingFactor;
         for (let i = thingYStartIndex; i <= thingYEndIndex; i++) {
-            text = getGridContents(0, i + 1);
+            text = getGridContents(i + 1, 0);
             if (text !== undefined) {
                 let y = (thingYMins[i] - worldTopLeftY + thingHeight / 2) * scalingFactor;
                 ctx.fillText(text, x, y);
@@ -225,7 +237,7 @@ function updateView() {
 
 // Requires that i < j
 function getGridContents(i, j) {
-    let key = (numObjects * i + j).toString();
+    let key = ((numObjects + 1) * i + j).toString();
     let text = grid[key];
     if (text === undefined) {
         return undefined;
