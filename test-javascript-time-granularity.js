@@ -32,7 +32,8 @@ for (let i = 0; i < samples.length; i++) {
 
 window.requestAnimationFrame(draw);
 function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "rgb(50, 50, 50)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // get y bounds
     let minDelta = buffer[0];
@@ -51,7 +52,6 @@ function draw() {
     maxDelta *= 1.1;
 
     // draw points
-    ctx.save();
     ctx.lineWidth = 2;
     ctx.strokeStyle = "white";
     ctx.beginPath();
@@ -77,7 +77,6 @@ function draw() {
     y = mapLinear(minDelta, originalMaxDelta, maxDelta, canvas.height, 0);
     ctx.fillText(roundToNPlaces(originalMaxDelta, 5) + " ms", canvas.width - 10, y);
 
-    ctx.restore();
     window.requestAnimationFrame(draw);
 }
 

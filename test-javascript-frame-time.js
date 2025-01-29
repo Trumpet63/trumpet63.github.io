@@ -22,7 +22,8 @@ function draw(currentTimeMillis) {
         return;
     }
     
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "rgb(50, 50, 50)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     let deltaMillis = currentTimeMillis - previousTimeMillis;
     buffer.push(deltaMillis);
@@ -48,7 +49,6 @@ function draw(currentTimeMillis) {
     maxDelta *= 1.1;
 
     // draw points
-    ctx.save();
     ctx.lineWidth = 2;
     ctx.strokeStyle = "white";
     ctx.beginPath();
@@ -73,8 +73,6 @@ function draw(currentTimeMillis) {
     ctx.fillText(roundToNPlaces(originalMinDelta, 3) + " ms", canvas.width - 10, y);
     y = mapLinear(minDelta, originalMaxDelta, maxDelta, canvas.height, 0);
     ctx.fillText(roundToNPlaces(originalMaxDelta, 3) + " ms", canvas.width - 10, y);
-
-    ctx.restore();
 
     previousTimeMillis = currentTimeMillis;
     
