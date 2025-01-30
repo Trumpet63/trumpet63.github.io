@@ -3,14 +3,35 @@ promptDiv.addEventListener("click", onClick);
 let canvas;
 let ctx;
 let audioContext;
-function onClick() {
+async function onClick() {
     promptDiv.remove();
 
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    let audioStartTime = audioContext.currentTime;
-    while (audioStartTime === audioContext.currentTime) {
-        // wait until the audio context wakes up
+
+    // FireFox starts the context suspended
+    let waitStartTime;
+    if (audioContext.state === "suspended") {
+        console.log("resuming");
+        waitStartTime = performance.now();
+        await audioContext.resume();
+        console.log("Waited " + (performance.now() - waitStartTime) + " ms");
     }
+    console.log(audioContext.state);
+    
+    waitStartTime = performance.now();
+    let audioStartTime = audioContext.currentTime;
+    // wait until the audio context wakes up, and don't block the main thread
+    await new Promise(resolve => {
+        function checkTime() {
+            if (audioContext.currentTime > audioStartTime) {
+                resolve();
+            } else {
+                requestAnimationFrame(checkTime);
+            }
+        }
+        checkTime();
+    });
+    console.log("Waited " + (performance.now() - waitStartTime) + " ms");
 
     canvas = document.createElement("canvas");
     canvas.id = "mainCanvas";
@@ -32,7 +53,7 @@ function onResize() {
 
 let previousAudioTimeMillis = null;
 let buffer = [];
-let bufferMaxSize = 1400;
+let bufferMaxSize = 700;
 
 function draw() {
     let currentAudioTimeMillis = audioContext.currentTime * 1000;

@@ -15,7 +15,7 @@ let samplesMaxSize = 2000;
 let startTime = performance.now();
 let previousSample = startTime;
 let currentSample = startTime;
-while (samples.length < samplesMaxSize && currentSample - startTime < 2000) {
+while (samples.length < samplesMaxSize && currentSample - startTime < 5000) {
     currentSample = performance.now();
     if (currentSample != previousSample) {
         samples.push(currentSample);

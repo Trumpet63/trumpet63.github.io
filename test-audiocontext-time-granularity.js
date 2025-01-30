@@ -3,7 +3,7 @@ promptDiv.addEventListener("click", onClick);
 let canvas;
 let ctx;
 function onClick() {
-    promptDiv.remove();
+    promptDiv.innerText = "Please Wait...";
 
     canvas = document.createElement("canvas");
     canvas.id = "mainCanvas";
@@ -13,7 +13,6 @@ function onClick() {
     ctx = canvas.getContext("2d");
 
     window.addEventListener("resize", onResize);
-    window.requestAnimationFrame(draw);
 
     performTest();
 }
@@ -25,29 +24,82 @@ function onResize() {
     canvas.height = h;
 }
 
+let audioContext;
 let buffer;
-function performTest() {
-    let audioContext = new (window.AudioContext || window.webkitAudioContext)();
+let samples = [];
+let samplesMaxSize = 2000;
+let startTime;
+let previousSample;
+let noChangeCount = 0;
+let channel = new MessageChannel();
 
-    let samples = [];
-    let samplesMaxSize = 2000;
-    let startTime = performance.now();
-    let previousSample = audioContext.currentTime;
+// FireFox has this issue where if you check if the audiocontext time changed
+// in a tight loop, it won't ever update it - presumably because we're blocking
+// the thread it uses to update it. So a message channel seems like the fastest
+// running async thing - faster than setTimeout(0);
+// In Chrome I'd prefer to just use a tight loop, but I don't wanna have both
+// methods here.
+channel.port1.onmessage = () => {
     let currentSample = audioContext.currentTime;
-    while (samples.length < samplesMaxSize && performance.now() - startTime < 2000) {
-        currentSample = audioContext.currentTime;
-        if (currentSample != previousSample) {
-            samples.push(currentSample);
-            previousSample = currentSample;
-        }
+    if (currentSample !== previousSample) {
+        samples.push(currentSample);
+        previousSample = currentSample;
+    } else {
+        noChangeCount++;
     }
 
+    if (samples.length < samplesMaxSize && performance.now() - startTime < 2000) {
+        channel.port2.postMessage(null); // Schedule the next iteration
+    } else {
+        console.log("noChangeCount =", noChangeCount);
+        calculateDeltas();
+    }
+};
+
+async function performTest() {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+    // FireFox starts the context suspended
+    let waitStartTime;
+    if (audioContext.state === "suspended") {
+        console.log("resuming");
+        waitStartTime = performance.now();
+        await audioContext.resume();
+        console.log("Waited " + (performance.now() - waitStartTime) + " ms");
+    }
+    console.log(audioContext.state);
+    
+    waitStartTime = performance.now();
+    let audioStartTime = audioContext.currentTime;
+    // wait until the audio context wakes up, and don't block the main thread
+    await new Promise(resolve => {
+        function checkTime() {
+            if (audioContext.currentTime > audioStartTime) {
+                resolve();
+            } else {
+                requestAnimationFrame(checkTime);
+            }
+        }
+        checkTime();
+    });
+    console.log("Waited " + (performance.now() - waitStartTime) + " ms");
+
+    startTime = performance.now()
+    previousSample = audioContext.currentTime
+    channel.port2.postMessage(null); // Start sampling
+}
+
+function calculateDeltas() {
     buffer = []
     previousSample = samples[0];
     for (let i = 1; i < samples.length; i++) {
         buffer.push(1000 * (samples[i] - previousSample));
         previousSample = samples[i];
     }
+    console.log("buffer length", buffer.length);
+
+    promptDiv.remove();
+    window.requestAnimationFrame(draw);
 }
 
 function draw() {

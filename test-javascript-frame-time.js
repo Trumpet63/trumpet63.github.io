@@ -12,7 +12,7 @@ function onResize() {
 
 let previousTimeMillis = null;
 let buffer = [];
-let bufferMaxSize = 1400;
+let bufferMaxSize = 700;
 
 window.requestAnimationFrame(draw);
 function draw(currentTimeMillis) {
