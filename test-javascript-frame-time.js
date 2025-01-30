@@ -50,7 +50,7 @@ function draw(currentTimeMillis) {
 
     // draw points
     ctx.lineWidth = 2;
-    ctx.strokeStyle = "white";
+    ctx.strokeStyle = "rgb(20, 255, 20)";
     ctx.beginPath();
     for (let i = 0; i < buffer.length; i++) {
         let x = mapLinear(0, i, bufferMaxSize - 1, 0, canvas.width);
