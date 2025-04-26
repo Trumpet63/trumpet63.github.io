@@ -7,19 +7,21 @@
   canvas.width = width;
   canvas.height = height;
   var gl = canvas.getContext("webgl2");
-  var vertexShaderSrc = `
-    attribute vec3 aPosition;
-    attribute vec3 aNormal;
-    attribute vec2 aUV;
+  var vertexShaderSrc = `#version 300 es
+    precision highp float;
+
+    in vec3 aPosition;
+    in vec3 aNormal;
+    in vec2 aUV;
 
     uniform mat4 uProjection;
     uniform mat4 uView;
     uniform float uDisplacement;
     uniform float uDisplacementRatio;
 
-    varying vec2 vUV;
-    varying float vDisplacement;
-    varying float vDisplacementRatio;
+    out vec2 vUV;
+    out float vDisplacement;
+    out float vDisplacementRatio;
 
     void main() {
         vec3 displacedPosition = aPosition + uDisplacement * aNormal;
@@ -29,19 +31,36 @@
         vDisplacementRatio = uDisplacementRatio;
     }
 `;
-  var fragmentShaderSrc = `
+  var fragmentShaderSrc = `#version 300 es
     precision highp float;
 
-    varying vec2 vUV;
-    varying float vDisplacement;
-    varying float vDisplacementRatio;
+    in vec2 vUV;
+    in float vDisplacement;
+    in float vDisplacementRatio;
+
+    out vec4 outColor; // <-- you need to declare a new output in fragment shader
 
     float hash(vec2 p) {
-        p = vec2(dot(p, vec2(127.1, 311.7)),
-                dot(p, vec2(269.5, 183.3)));
-        return fract(sin(p.x + p.y) * 43758.5453);
+        const uint seed = 0x9747b28cU;
+        uint m = 0x5bd1e995U;
+        uint h = seed ^ 8U; // 8 bytes for two floats
+
+        uint k1 = floatBitsToUint(p.x);
+        uint k2 = floatBitsToUint(p.y);
+
+        k1 *= m; k1 ^= k1 >> 24; k1 *= m;
+        h *= m; h ^= k1;
+
+        k2 *= m; k2 ^= k2 >> 24; k2 *= m;
+        h *= m; h ^= k2;
+
+        h ^= h >> 13;
+        h *= m;
+        h ^= h >> 15;
+
+        return fract(float(h) / 4294967296.0); // normalize to 0..1
     }
-    
+
     void main() {
         float density = 450.0;
         vec2 snappedUV = floor(vUV * density) / density;
@@ -59,7 +78,7 @@
         }
 
         float lightness = vDisplacementRatio/1.8;
-        gl_FragColor = vec4(0.1 + lightness, 0.2 + lightness, 0.4 + lightness*1.2, 1.0);
+        outColor = vec4(0.1 + lightness, 0.2 + lightness, 0.4 + lightness*1.2, 1.0);
     }
 `;
   var vertexShader = compileShader(vertexShaderSrc, gl.VERTEX_SHADER);
