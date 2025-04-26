@@ -30,7 +30,7 @@
     }
 `;
   var fragmentShaderSrc = `
-    precision mediump float;
+    precision highp float;
 
     varying vec2 vUV;
     varying float vDisplacement;
