@@ -1,0 +1,95 @@
+#container-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding-top: 10px;
+}
+
+#container-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+#difficulty-column-container{
+    flex-direction: column;
+}
+
+#difficulty-toggle-label {
+    text-align: center;
+    padding: 5px;
+}
+
+#difficulty-toggle-div{
+    
+}
+
+#difficulty-toggle {
+    /* Hide default dropdown arrow */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    
+    padding: 5px;
+    width: 100px;
+    overflow: hidden;
+    /* height: 574px; */
+}
+
+#difficulty-toggle option {
+    text-align: center;
+}
+
+#difficulty-toggle option:checked {
+    background-color: lightblue;
+}
+
+#card {
+    display: inline-block;
+    border: 2px solid #000;
+    padding: 10px;
+}
+
+.bingo-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.bingo-cell {
+    width: 100px;
+    height: 100px;
+    border: 1px solid #000;
+    box-sizing: border-box;
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    user-select: none;
+}
+
+.marked-cell {
+    background-color: rgb(157, 251, 157);
+}
+
+#options {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+#json-output-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+footer {
+    font-size: smaller;
+    text-align: left;
+    position: fixed;
+    bottom: 0;
+}

@@ -1,0 +1,16 @@
+body {
+    margin: 0;
+}
+
+.box {
+    position: fixed;
+    cursor: pointer;
+    border: 2px solid black;
+    width: 5%;
+    height: 5%;
+    z-index: 1;
+}
+
+.box:hover {
+    z-index: 2;
+}

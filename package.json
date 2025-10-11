@@ -1,0 +1,15 @@
+{
+  "name": "trumpet63.github.io",
+  "version": "1.0.0",
+  "description": "https://trumpet63.github.io/",
+  "main": "dist/index.html",
+  "scripts": {
+    "build": "node esbuild.config.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "esbuild": "0.25.10"
+  }
+}

@@ -1,0 +1,118 @@
+body {
+    text-align: center;
+}
+
+#get-recipe-input-div {
+    margin-top: 50px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: visible;
+}
+
+#get-recipe-input-div input {
+    font-size: 18px;
+}
+
+#get-recipe-input-div button {
+    font-size: 18px;
+}
+
+#get-recipe-suggestions li {
+    font-size: 16px;
+}
+
+#recipe-steps-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.object-div {
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    --darkreader-inline-bgimage: initial;
+    --darkreader-inline-bgcolor: #181a1b;
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    box-sizing: border-box;
+    margin: 4px;
+    border-radius: 5px;
+    user-select: none;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    min-height: 37px;
+    grid-gap: 5px;
+    line-height: 0;
+    font-size: 15.5px;
+    padding: 1px 9px 0;
+    border: 1px solid #9f9f9f;
+    color: #000;
+    transition: background .1s linear;
+}
+
+.object-span {
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    --darkreader-inline-bgimage: initial;
+    --darkreader-inline-bgcolor: #181a1b;
+    user-select: none;
+    line-height: 0;
+    color: #000;
+    box-sizing: border-box;
+    margin: 0;
+    font-size: 15.4px;
+}
+
+.recipe-step-div {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    font-family: Roboto,sans-serif;
+    user-select: none;
+    color: #040404;
+    box-sizing: border-box;
+    margin: 0;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 9px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    width: auto;
+}
+
+.suggestions-visible {
+    border: 1px dotted #ccc;
+    padding: 3px;
+    position:absolute;
+    top: 100%;
+    left: 30%;
+    width: 40%;
+    background-color: white;
+}
+
+.suggestions-visible ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.suggestions-visible ul li {
+    padding: 5px 0;
+}
+
+.suggestions-visible ul li:hover {
+    cursor: pointer;
+    background: #eee;
+}
+
+.suggestions-keyboard-selected {
+    background: #eee;
+}
+
+footer {
+    font-size: smaller;
+    text-align: left;
+    position: fixed;
+    bottom: 0;
+}
