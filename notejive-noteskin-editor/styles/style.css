@@ -1,0 +1,322 @@
+body {
+    display: block;
+    margin: 0px;
+    color: white;
+    font-size: x-large;
+    background-color: black;
+}
+
+#mainCanvas {
+    position: absolute;
+}
+
+#wholeUIDiv {
+    position: absolute;
+    width: 1689px;
+    height: 950px;
+}
+
+#topControlsDiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    height: 8%;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.topControlsButton {
+    display: inline-block;
+    width: 5.5%;
+    height: 80%;
+}
+
+#importExportButtonDiv {
+    width: 10.5%;
+}
+
+#receptorButtonDiv {
+    width: 7%;
+}
+
+.topControlsSelected {
+    background-color: rgba(235, 240, 137, 0.2);
+}
+
+.topControlsButton button {
+    background-color: rgba(0, 0, 0, 0.2);
+    width: 100%;
+    height: 100%;
+    color: white;
+    font-size: x-large;
+}
+
+.topControlsButton button:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.topControlsButton button:active {
+    transform: translateY(4px);
+}
+
+#sidebarDiv {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 50%;
+    height: 92%;
+}
+
+#baseColorDivContainer {
+    box-sizing: border-box;
+    width: 100%;
+    height: 8%;
+    padding-top: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#baseColorDiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+#baseColorLabelDiv {
+    display: inline-block;
+    width: 20%;
+}
+
+#baseColorLabelDiv label {
+    font-size: xx-large;
+}
+
+#baseColorPickerDiv {
+    display: inline-block;
+    text-align: center;
+    width: 20%;
+}
+
+#baseColorPickerDiv input[type="color"] {
+    box-sizing: content-box;
+    width: 80%;
+    height: 30px;
+}
+
+#baseColorInputDiv {
+    display: inline-block;
+    width: 30%;
+}
+
+#baseColorInputDiv input {
+    width: 95%;
+    color: white;
+    font-size: xx-large;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 0;
+}
+
+#headingDiv {
+    box-sizing: border-box;
+    height: 6%;
+    padding-top: 10px;
+    padding-left: 15px;
+    font-size: xx-large;
+}
+
+#optionsDiv {
+    box-sizing: border-box;
+    height: 48%;
+    padding-top: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#optionsDiv .sliderDiv + .sliderDiv {
+    margin-top: 2.0%;
+}
+
+.sliderDiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.sliderLabelDiv {
+    display: inline-block;
+    width: 20%;
+}
+
+.sliderWarningSpan {
+    width: 3.0%;
+    height: 100%;
+}
+
+.sliderWarningSpan img {
+    width: 100%;
+}
+
+.sliderRangeDiv {
+    display: inline-block;
+    width: 40%;
+}
+
+.sliderRangeDiv input[type="range"] {
+    width: 100%;
+}
+
+.sliderInputDiv {
+    display: inline-block;
+    width: 20%;
+}
+
+.sliderInputDiv input {
+    width: 95%;
+    font-size: x-large;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 0;
+}
+
+#layersDiv {
+    background-color: rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: 38%; /*3x 10px for top padding*/
+}
+
+#layersControlPanel {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: rgba(100, 0, 0, 0.1);
+    width: 100%;
+    height: 15%;
+}
+
+.controlPanelButton {
+    display: flex;
+    align-items: center;
+    width: 6%;
+    height: 65%;
+    justify-content: center;
+}
+
+.controlPanelButton input {
+    height: 100%;
+    cursor: pointer;
+}
+
+.controlPanelButton input:hover {
+    height: 115%;
+}
+
+.controlPanelButton input:active {
+    transform: translateY(4px);
+}
+
+#layersDisplay {
+    background-color: rgba(0, 100, 0, 0.1);
+    height: 85%;
+    overflow-y: scroll;
+}
+
+#layersDisplay .layer {
+    margin-top: 1.0%;
+}
+
+#layersDisplay .layer + .layer {
+    margin-top: 2.0%;
+}
+
+.layer {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.selectedButton {
+    display: inline-block;
+    flex-wrap: wrap;
+    width: 4%;
+    text-align: center;
+    margin-bottom: 5px; /* shift the checkbox up a tiny bit so it aligns vertically*/
+}
+
+.selectedButton input {
+    transform: scale(1.6);
+}
+
+.visibilityButton {
+    display: flex;
+    align-items: center;
+    width: 4%;
+    height: 100%;
+    justify-content: center;
+}
+
+.visibilityButton img {
+    width: 100%;
+    cursor: pointer;
+}
+
+.visibilityButton img:hover {
+    width: 115%;
+}
+
+.visibilityButton img:active {
+    transform: translateY(4px);
+}
+
+.layerPreview {
+    display: inline-flex;
+    width: 11%;
+    align-items: center;
+}
+
+.layerLabelDiv {
+    display: inline-block;
+    width: 50%;
+}
+
+.layerLabelDiv input {
+    width: 95%;
+    font-size: x-large;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 0;
+}
+
+.buttonOnImportExportUI {
+    display: block;
+    width: 100%;
+    height: 10%;
+    margin-top: 3%;
+}
+
+.buttonOnImportExportUI button {
+    background-color: rgba(0, 0, 0, 0.2);
+    width: 100%;
+    height: 100%;
+    color: white;
+    font-size: x-large;
+}
+
+.buttonOnImportExportUI button:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.buttonOnImportExportUI button:active {
+    transform: translateY(4px);
+}
+
+.textareaOnImportExportUI {
+    width: 100%;
+    height: 60%;
+    margin-top: 6%;
+}
+
+.textareaOnImportExportUI textarea {
+    width: 100%;
+    height: 100%;
+    resize: none;
+}

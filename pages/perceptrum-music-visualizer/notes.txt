@@ -1,0 +1,3 @@
+Note: I brought in the source code for this project (as opposed to just copying the bundle.js)
+so I could set a default song, so a user visiting my portfolio doesn't have to have a music
+file locally.
