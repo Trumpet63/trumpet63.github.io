@@ -27,15 +27,15 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: max(13%, 100px);
+    width: max(16%, 120px);
 }
 
 .cardPreview * {
     width: 100%;
     height: auto;
     object-fit: contain;
-    padding-top: 1vh;
-    padding-bottom: 1vh;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
     box-sizing: border-box;
 }
 
