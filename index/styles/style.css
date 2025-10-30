@@ -4,23 +4,72 @@ html, body {
   height: 100%;
   display: flex;
   flex-direction: column;
+  gap: 6px;
+  font-size: 18px;
+  background: #44494a;
+  color: #ebebeb;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* I copy-pasted the default css for h3 and then edited it a bit */
+h3 {
+    display: block;
+    font-size: 1.17em;
+    margin-block-start: 0.7em;
+    margin-block-end: 0.6em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+}
+
+#pageHeader {
+    font-size: 30px;
+    display: flex;
+    width: 100%;
+    max-width: 1100px;
+    min-height: 80px;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    padding-left: max(1vw, 10px);
+    padding-right: max(1vw, 10px);
+    box-sizing: border-box;
+    background: #282c2d;
+}
+
+#introduction {
+    font-size: 20px;
+    display: flex;
+    width: 100%;
+    max-width: 1100px;
+    min-height: 80px;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    padding-left: max(1vw, 10px);
+    padding-right: max(1vw, 10px);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    background: #282c2d;
 }
 
 .cardContainer {
     display: flex;
     flex-direction: row;
-    /* border: 2px solid red; */
     width: 100%;
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 0 auto;
-    min-height: 20vh;
-    padding-left: 1vw;
-    padding-right: 1vw;
+    min-height: 21vh;
+    padding-left: max(1vw, 10px);
+    padding-right: max(1vw, 10px);
     box-sizing: border-box;
-}
-
-.cardContainer * {
-    /* border: 2px solid red; */
+    background: #282c2d;
 }
 
 .cardPreview {
@@ -43,8 +92,9 @@ html, body {
     display: flex;
     flex-direction: column;
     flex: 1;
-    padding-left: 1vw;
-    padding-right: 1vw;
+    padding-left: max(1vw, 10px);
+    padding-right: max(1vw, 10px);
+    padding-bottom: max(1vw, 18px);
     box-sizing: border-box;
 }
 

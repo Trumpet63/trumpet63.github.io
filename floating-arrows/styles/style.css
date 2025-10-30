@@ -1,0 +1,182 @@
+html {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    color: rgb(220, 220, 220);
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 28px;
+    background-color: rgb(29, 29, 29);
+    margin: 0px;
+    height: 100%;
+}
+
+button {
+    color: rgb(220, 220, 220);
+    background-color: rgb(31, 31, 31);
+    border-top-color: rgb(43, 43, 43);
+    border-left-color: rgb(43, 43, 43);
+    border-bottom-color: black;
+    border-right-color: black;
+    padding: 8px 22px 8px 22px;
+    font-size: 100%;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: rgb(47, 47, 47);
+    border-width: 4px;
+    padding: 6px 20px 6px 20px;
+}
+
+button:disabled {
+    color: rgb(77, 77, 77);
+}
+
+button:active {
+    border-top-color: black;
+    border-left-color: black;
+    border-bottom-color: rgb(43, 43, 43);
+    border-right-color: rgb(43, 43, 43);
+}
+
+input {
+    color: rgb(220, 220, 220);
+    background-color: rgba(0, 0, 0, 0.535);
+    font-size: 100%;
+}
+
+input[type=range] {
+    width: 200px;
+}
+
+input[type=number] {
+    width: 200px;
+}
+
+input[type="file"]::file-selector-button {
+    color: rgb(220, 220, 220);
+    background-color: rgb(31, 31, 31);
+    border-top-color: rgb(43, 43, 43);
+    border-left-color: rgb(43, 43, 43);
+    border-bottom-color: black;
+    border-right-color: black;
+    padding: 12px 10px 12px 10px;
+    font-size: 100%;
+    font-weight: bold;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background-color: rgb(47, 47, 47);
+}
+
+input[type="file"]::file-selector-button:disabled {
+    color: rgb(77, 77, 77);
+}
+
+input[type="file"]::file-selector-button:active {
+    border-top-color: black;
+    border-left-color: black;
+    border-bottom-color: rgb(43, 43, 43);
+    border-right-color: rgb(43, 43, 43);
+}
+
+/* input[type="range"]::-webkit-slider-runnable-track {
+    background-color: rgba(0, 0, 0, 0.442);
+    border-radius: 10px;
+} */
+
+#everythingContainer {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+#mainCanvas {
+    background-color: rgb(17, 17, 17);
+}
+
+#topUIDiv {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    top: 0px;
+}
+
+#optionsMenuDiv {
+    background-color: rgba(30, 30, 30, 0.8);
+    width: 700px;
+    height: 100%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    padding-top: 80px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+#fileSelector {
+    width: 540px;
+}
+
+#volumeInputDiv {
+    display: flex;
+    align-items: center;
+    background-color: rgb(31, 31, 31);
+    border: 2px solid black;
+    padding: 14px 18px 14px 18px;
+    font-weight: bold;
+}
+
+#volumeInput {
+    margin-left: 40px;
+    width: 180px;
+}
+
+#playlistControlsDiv {
+    position: absolute;
+    width: 100%;
+    top: 100px;
+}
+
+#playlistControlsInnerDiv {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 680px;
+    margin: 0 auto;
+}
+
+#currentSongInformation {
+    font-size: 110%;
+}
+
+#arrowButtonContainer {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+}
+
+#addArrowButton {
+    display: block;
+    margin: 0 auto;
+}
+
+.divider {
+    top: 20px;
+}
+
+.standaloneLabel {
+    display: inline-block;
+    width: 300px;
+}
+
+.optionsMenuOption {
+    margin-top: 14px;
+}
+
+.invalidInput {
+    background-color: rgba(255, 5, 5, 0.627);
+}

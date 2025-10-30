@@ -12,8 +12,8 @@
       let imgSrc = this.getAttribute("img") || "";
       cardImg.src = imgSrc;
       let cardTitleContent = container.querySelector(".cardTitleContent");
-      let title = this.getAttribute("title") || "";
-      cardTitleContent.textContent = title;
+      let project = this.getAttribute("project") || "";
+      cardTitleContent.textContent = project;
       let href = this.getAttribute("href") || "";
       cardTitleContent.href = href;
       let cardDescription = container.querySelector(".cardDescription");

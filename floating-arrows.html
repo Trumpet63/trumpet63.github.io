@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Floating Arrows</title>
+    <link rel="stylesheet" href="floating-arrows/styles/style.css">
+</head>
+<body>
+    <div id="everythingContainer">
+        <canvas id="mainCanvas" onclick="ui.onCanvasClick(event)" onmousemove="ui.onCanvasMouseMove(event)"></canvas>
+
+        <div id="playlistControlsDiv">
+            <div id="playlistControlsInnerDiv">
+                <button id="playlistBackButton" onclick="ui.onPlaylistBackButtonClick()">‹</button>
+                <span id="currentSongInformation">No song loaded</span>
+                <button id="playlistForwardButton" onclick="ui.onPlaylistForwardButtonClick()">›</button>
+            </div>
+        </div>
+
+        <div id="optionsMenuDiv" style="display: none;">
+            <!-- <div id="drawingModeDivider">
+                <div class="optionsMenuOption">
+                    <label class="standaloneLabel">Drawing Mode</label>
+                    <input type="radio" id="flatDrawingMode" name="drawingModeRadio" value="Flat" checked onclick="ui.onDrawingModeInput(this)">
+                    <label for="flatDrawingMode">Flat</label>
+                    <input type="radio" id="circleDrawingMode" name="drawingModeRadio" value="Circle" onclick="ui.onDrawingModeInput(this)">
+                    <label for="circleDrawingMode">Circle</label>
+                    <input type="radio" id="pathDrawingMode" name="drawingModeRadio" value="Path" onclick="ui.onDrawingModeInput(this)">
+                    <label for="pathDrawingMode">Path</label>
+                </div>
+            </div> -->
+
+            <!-- <div id="flatOptionsDivider">
+                <h3 class="divider">Flat Options<hr></h3>
+                <div class="optionsMenuOption">
+                    <label for="flatAmplitudeMultiplierInput" class="standaloneLabel">Amplitude Multiplier</label>
+                    <input id="flatAmplitudeMultiplierInput" type="range" min="0" max="3" value="1" step="0.01" oninput="ui.onFlatAmplitudeMultiplierInput(this)">
+                </div>
+            </div> -->
+            
+            <!-- <div id="circleOptionsDivider">
+                <h3 class="divider">Circle Options<hr></h3>
+                <div class="optionsMenuOption">
+                    <label for="circleCenterXInput" class="standaloneLabel">Center X</label>
+                    <input id="circleCenterXInput" type="range" min="-200" max="1000" value="400" step="1" oninput="ui.onCircleCenterXInput(this)">
+                </div>
+                <div class="optionsMenuOption">
+                    <label for="circleCenterYInput" class="standaloneLabel">Center Y</label>
+                    <input id="circleCenterYInput" type="range" min="-200" max="1000" value="400" step="1" oninput="ui.onCircleCenterYInput(this)">
+                </div>
+                <div class="optionsMenuOption">
+                    <label for="minRadiusInput" class="standaloneLabel">Min Radius</label>
+                    <input id="minRadiusInput" type="number" value="87.5" step="any" oninput="ui.onMinRadiusInput(this)">
+                </div>
+                <div class="optionsMenuOption">
+                    <label for="maxRadiusInput" class="standaloneLabel">Max Radius</label>
+                    <input id="maxRadiusInput" type="number" value="350" step="any" oninput="ui.onMaxRadiusInput(this)">
+                </div>
+            </div> -->
+            
+            <!-- <div id="pathOptionsDivider">
+                <h3 class="divider">Path Options<hr></h3>
+                <button id="drawPathButton" onclick="ui.onDrawPathButtonClick()">Draw A Path</button>
+                <div class="optionsMenuOption">
+                    <label for="pathAmplitudeMultiplierInput" class="standaloneLabel">Amplitude Multiplier</label>
+                    <input id="pathAmplitudeMultiplierInput" type="range" min="0" max="1" value="0.2" step="0.01" oninput="ui.onPathAmplitudeMultiplierInput(this)">
+                </div>
+            </div> -->
+
+            <div id="sharedOptionsDivider">
+                <h3 class="divider">Shared Options<hr></h3>
+                <div class="optionsMenuOption">
+                    <label for="hueOffsetInput" class="standaloneLabel">Hue Offset</label>
+                    <input id="hueOffsetInput" type="range" min="0" max="360" value="200" step="1" oninput="ui.onHueOffsetInput(this)">
+                </div>
+                <div class="optionsMenuOption">
+                    <label for="hueMultiplerInput" class="standaloneLabel">Hue Multiplier</label>
+                    <input id="hueMultiplerInput" type="number" value="0.1" step="any" oninput="ui.onHueMultiplierInput(this)">
+                </div>
+                <div class="optionsMenuOption">
+                    <label for="minLineWidthInput" class="standaloneLabel">Min Line Width</label>
+                    <input id="minLineWidthInput" type="number" value="1" step="any" oninput="ui.onMinLineWidthInput(this)">
+                </div>
+                <div class="optionsMenuOption">
+                    <label for="maxLineWidthInput" class="standaloneLabel">Max Line Width</label>
+                    <input id="maxLineWidthInput" type="number" value="2" step="any" oninput="ui.onMaxLineWidthInput(this)">
+                </div>
+                <div class="optionsMenuOption">
+                    <label class="standaloneLabel">Fade Effect</label>
+                    <input type="radio" id="onFadeEffect" name="fadeEffectRadio" value="On" checked onclick="ui.onFadeEffectInput(this)">
+                    <label for="onFadeEffect">On</label>
+                    <input type="radio" id="offFadeEffect" name="fadeEffectRadio" value="Off" onclick="ui.onFadeEffectInput(this)">
+                    <label for="offFadeEffect">Off</label>
+                </div>
+                <div class="optionsMenuOption">
+                    <label class="standaloneLabel">Fade Direction</label>
+                    <input type="radio" id="inFadeDirection" name="fadeDirectionRadio" value="In" onclick="ui.onFadeDirectionInput(this)">
+                    <label for="inFadeDirection">In</label>
+                    <input type="radio" id="outFadeDirection" name="fadeDirectionRadio" value="Out" onclick="ui.onFadeDirectionInput(this)">
+                    <label for="outFadeDirection">Out</label>
+                    <input type="radio" id="noneFadeDirection" name="fadeDirectionRadio" value="None" checked onclick="ui.onFadeDirectionInput(this)">
+                    <label for="noneFadeDirection">None</label>
+                </div>
+                <div class="optionsMenuOption">
+                    <label for="fadeSpeedInput" class="standaloneLabel">Fade Speed</label>
+                    <input id="fadeSpeedInput" type="range" min="0.001" max="0.1" value="0.015" step="0.001" oninput="ui.onFadeSpeedInput(this)">
+                </div>
+                <div class="optionsMenuOption">
+                    <label for="fadeOpacityInput" class="standaloneLabel">Fade Opacity</label>
+                    <input id="fadeOpacityInput" type="range" min="0.7" max="1" value="0.85" step="0.001" oninput="ui.onFadeOpacityInput(this)">
+                </div>
+            </div>
+        </div>
+
+        <div id="topUIDiv">
+            <button id="optionsButton" onclick="ui.onOptionsButtonClick()">Options ▼</button>
+
+            <input type="file" id="fileSelector" multiple onchange="ui.onFileSelect(event)">
+            
+            <button id="playPauseButton" onclick="ui.onPlayPauseButtonClick()">Play</button>
+
+            <div id="volumeInputDiv">
+                <label for="volumeInput">Volume</label>
+                <input id="volumeInput" type="range" min="0" max="1" step="0.01" value="0.1" oninput="ui.onVolumeInput(this)">
+            </div>
+        </div>
+        
+        <div id="arrowButtonContainer">
+            <button id="addArrowButton" onclick="exports.addRandomArrows()">Add Arrows</button>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="floating-arrows/scripts/bundle.js"></script>
+</html>
