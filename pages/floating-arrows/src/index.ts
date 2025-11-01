@@ -19,6 +19,13 @@ Song.initialize();
 window.ui = UI;
 UI.initialize();
 
+function addRandomArrows() {
+    for (let i = 0; i < 100; i++) {
+        addRandomArrow(offscreenRandomPosition);
+    }
+}
+window.ui.addRandomArrows = addRandomArrows;
+
 let ctx: CanvasRenderingContext2D = UI.canvas.getContext("2d");
 let copyCtx: CanvasRenderingContext2D = UI.copyCanvas.getContext("2d");
 
@@ -27,12 +34,6 @@ export let MIN_ARROW_SIZE: number = 15;
 export let MAX_ARROW_SIZE: number = 80;
 let baseDirection: number = 5 / 4 * Math.PI;
 let lastAnimationUpdateMillis: number;
-
-export function addRandomArrows() {
-    for (let i = 0; i < 100; i++) {
-        addRandomArrow(offscreenRandomPosition);
-    }
-}
 
 function spawnInitialArrows() {
     // arrows.push(

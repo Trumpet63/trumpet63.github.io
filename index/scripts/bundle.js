@@ -16,6 +16,8 @@
       cardTitleContent.textContent = project;
       let href = this.getAttribute("href") || "";
       cardTitleContent.href = href;
+      let imageAnchor = cardImg.parentNode;
+      imageAnchor.href = href;
       let cardDescription = container.querySelector(".cardDescription");
       let description = this.getAttribute("description") || "";
       cardDescription.textContent = description;

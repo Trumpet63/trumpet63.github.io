@@ -18,6 +18,8 @@ class CustomCard extends HTMLElement {
 
         let href = this.getAttribute('href') || '';
         cardTitleContent.href = href;
+        let imageAnchor = <HTMLAnchorElement> cardImg.parentNode;
+        imageAnchor.href = href;
 
         let cardDescription = container.querySelector(".cardDescription")!;
         let description = this.getAttribute('description') || '';

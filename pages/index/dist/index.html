@@ -60,6 +60,12 @@
         img="index/assets/ray-traced-spheres.png"
     ></custom-card>
     <custom-card
+        project="CPU Ray Traced Cube"
+        href="cpu-ray-trace-cube.html"
+        description="A floating rotating textured cube and a textured floor rendered real-time with software-based ray tracing (no shader). Textures are not my own."
+        img="index/assets/ray-traced-cube.png"
+    ></custom-card>
+    <custom-card
         project="Greenest Emoji Project"
         href="greenest-emoji.html"
         description="An app I made to help me explore the problem of which Microsoft Teams emoji is the greenest. Why, you ask? Because at work my team would use any green emoji to indicate approval, like approving a merge, and I wanted to be able to use the most exotic and unexpected green emojis. In this app I implemented 10 different scoring methods, a visualization of which pixels scored highest, the ability to sort by each scoring method, and a &quot;test&quot; function, which generates a diagnostic image of all the possible colors in order from most to least green based on any of the scoring methods."
@@ -99,7 +105,7 @@
     <template id="custom-card" hidden>
         <div class="cardContainer">
             <div class="cardPreview">
-                <img class="cardImg">
+                <a><img class="cardImg"></a>
             </div>
             <div class="cardMain">
                 <div class="cardTitle">

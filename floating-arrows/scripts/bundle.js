@@ -1643,6 +1643,12 @@
   Song.initialize();
   window.ui = UI;
   UI.initialize();
+  function addRandomArrows() {
+    for (let i = 0; i < 100; i++) {
+      addRandomArrow(offscreenRandomPosition);
+    }
+  }
+  window.ui.addRandomArrows = addRandomArrows;
   var ctx = UI.canvas.getContext("2d");
   var copyCtx = UI.copyCanvas.getContext("2d");
   var arrows = [];
@@ -1650,11 +1656,6 @@
   var MAX_ARROW_SIZE = 80;
   var baseDirection = 5 / 4 * Math.PI;
   var lastAnimationUpdateMillis;
-  function addRandomArrows() {
-    for (let i = 0; i < 100; i++) {
-      addRandomArrow(offscreenRandomPosition);
-    }
-  }
   function spawnInitialArrows() {
     for (let i = 0; i < desiredArrowsOnScreen * 0.75; i++) {
       addRandomArrow(initialRandomPosition);
