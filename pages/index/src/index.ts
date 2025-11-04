@@ -7,22 +7,49 @@ class CustomCard extends HTMLElement {
     connectedCallback() {
         let clone = <DocumentFragment> customCardTemplate.content.cloneNode(true);
         let container = clone.firstElementChild!;
+
+        let project = <string> this.getAttribute("project");
+        let href = <string> this.getAttribute("href");
+        let description = <string> this.getAttribute("description");
+        let imgSrc = <string> this.getAttribute("img");
+        let videoSrc = this.getAttribute("vid");
         
         let cardImg = <HTMLImageElement> container.querySelector(".cardImg");
-        let imgSrc = this.getAttribute('img') || '';
         cardImg.src = imgSrc;
+        
+        let cardVideo = <HTMLVideoElement> container.querySelector(".cardVideo");
+        if (videoSrc !== null) {
+            cardVideo.width = 160;
+            cardVideo.height = 160;
+            cardVideo.src = videoSrc;
+            
+            let mediaContainer = <HTMLDivElement> container.querySelector(".mediaContainer");
+            mediaContainer.classList.add("vid-hidden");
+            function onMouseEnter() {
+                mediaContainer.classList.add("img-hidden");
+                mediaContainer.classList.remove("vid-hidden");
+                cardVideo.play();
+            }
+            function onMouseLeave() {
+                mediaContainer.classList.remove("img-hidden");
+                mediaContainer.classList.add("vid-hidden");
+                cardVideo.pause();
+                cardVideo.currentTime = 0;
+            }
+            mediaContainer.addEventListener("mouseenter", onMouseEnter);
+            mediaContainer.addEventListener("mouseleave", onMouseLeave);
+        } else {
+            cardVideo.style.display = "none";
+        }
+
+        let cardAnchor = <HTMLAnchorElement> container.querySelector(".cardAnchor");
+        cardAnchor.href = href;
 
         let cardTitleContent = <HTMLAnchorElement> container.querySelector(".cardTitleContent")!;
-        let project = this.getAttribute('project') || '';
         cardTitleContent.textContent = project;
-
-        let href = this.getAttribute('href') || '';
         cardTitleContent.href = href;
-        let imageAnchor = <HTMLAnchorElement> cardImg.parentNode;
-        imageAnchor.href = href;
 
         let cardDescription = container.querySelector(".cardDescription")!;
-        let description = this.getAttribute('description') || '';
         cardDescription.textContent = description;
 
         this.appendChild(clone);

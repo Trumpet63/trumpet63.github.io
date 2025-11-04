@@ -22,6 +22,7 @@
         href="perceptrum-music-visualizer.html"
         description="A customizeable procedural music visualization app that visualizes the waveform of a given music file as it plays and adds various visual effects based on the computed frequency of the on-screen chunk. Uses fft.js to compute the frequency. The demo song is Final Flight by Chronox (CC-BY)."
         img="index/assets/perceptrum-cover.png"
+        vid="index/assets/perceptrum.mp4"
     ></custom-card>
     <custom-card
         project="Floating Arrows"
@@ -40,6 +41,7 @@
         href="cpu-gravity-particles.html"
         description="Simulates 40,000 particles arranged in a plane in 3D space being subjected to gravitational attraction to a point above the plane. The particles are rendered to the screen by casting a ray from each particle toward the camera and determining the intersection with the view plane (contrary to the typical method of casting a ray from the camera). This is done without a shader - it's all software-based rendering. It's not computed with a high degree of physical accuracy or precision; it's mostly just fun to watch."
         img="index/assets/gravity-sim-2-cropped.png"
+        vid="index/assets/gravity-particles.mp4"
     ></custom-card>
     <custom-card
         project="Spin Warrior"
@@ -105,7 +107,12 @@
     <template id="custom-card" hidden>
         <div class="cardContainer">
             <div class="cardPreview">
-                <a><img class="cardImg"></a>
+                <a class="cardAnchor">
+                    <div class="mediaContainer">
+                        <video class="cardVideo" preload="auto" loop></video>
+                        <img class="cardImg">
+                    </div>
+                </a>
             </div>
             <div class="cardMain">
                 <div class="cardTitle">
