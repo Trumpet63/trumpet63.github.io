@@ -18,9 +18,11 @@
       let cardVideo = container.querySelector(".cardVideo");
       if (videoSrc !== null) {
         let onMouseEnter2 = function() {
-          mediaContainer.classList.add("img-hidden");
-          mediaContainer.classList.remove("vid-hidden");
-          cardVideo.play();
+          cardVideo.play().then(() => {
+            mediaContainer.classList.add("img-hidden");
+            mediaContainer.classList.remove("vid-hidden");
+          }).catch(() => {
+          });
         }, onMouseLeave2 = function() {
           mediaContainer.classList.remove("img-hidden");
           mediaContainer.classList.add("vid-hidden");

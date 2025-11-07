@@ -2,3 +2,6 @@ Picsum is like a lorem ipsum for images.
 You can get a random image of specific dimensions.
 This will give a square 300px image:
 https://picsum.photos/300
+
+I used AV1 video codec in an mp4 container for the videos
+https://developer.mozilla.org/en-US/docs/Web/Media/Guides/Formats/Video_codecs#av1

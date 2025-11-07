@@ -26,9 +26,15 @@ class CustomCard extends HTMLElement {
             let mediaContainer = <HTMLDivElement> container.querySelector(".mediaContainer");
             mediaContainer.classList.add("vid-hidden");
             function onMouseEnter() {
-                mediaContainer.classList.add("img-hidden");
-                mediaContainer.classList.remove("vid-hidden");
-                cardVideo.play();
+                cardVideo.play().then(() => {
+                    // Only show the video once it has successfully started playing
+                    mediaContainer.classList.add("img-hidden");
+                    mediaContainer.classList.remove("vid-hidden");
+                }).catch(() => {
+                    // Do nothing!
+                    // Expected errors:
+                    // NotAllowedError - the user hasn't interacted with the document yet
+                });
             }
             function onMouseLeave() {
                 mediaContainer.classList.remove("img-hidden");
