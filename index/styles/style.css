@@ -90,22 +90,13 @@ h3 {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: max(16%, 160px);
+    width: max(16%, 210px);
 }
-
-/* .cardPreview * {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    padding-top: 2vh;
-    padding-bottom: 2vh;
-    box-sizing: border-box;
-} */
 
 .mediaContainer {
     position: relative;
-    width: 160px;
-    height: 160px;
+    width: 200px;
+    height: 200px;
     aspect-ratio: 1 / 1;
     overflow: hidden;
     display: block;
