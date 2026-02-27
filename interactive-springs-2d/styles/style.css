@@ -1,0 +1,19 @@
+html, body {
+    margin: 0px;
+    background-color: gray;
+}
+
+#mainContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+#canvasContainer {
+
+}
+
+#fpsContainer {
+    font-size: 26px;
+}
