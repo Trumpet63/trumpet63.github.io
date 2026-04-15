@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple DDR Clone</title>
+    <link rel="stylesheet" href="simple-ddr-clone/styles/style.css">
+</head>
+<body>
+    <div id="mainContainerDiv">
+        <div id="mainDiv">
+            <div id="leftDiv">
+                <canvas id="gameCanvas"></canvas>
+            </div>
+            <div id="rightDiv">
+                <div id="headerContainer">
+                    <div id="playButtonContainer">
+                        <button id="playButton" disabled>Play</button>
+                    </div>
+                    <div id="difficultySelectContainer">
+                        <div class="radio-option">
+                            <label for="difficultyRadioEasy">Easy</label>
+                            <input id="difficultyRadioEasy" type="radio" value="easy" name="difficultyRadio" checked>
+                        </div>
+                        <div class="radio-option">
+                            <label for="difficultyRadioHard">Hard</label>
+                            <input id="difficultyRadioHard" type="radio" value="hard" name="difficultyRadio">
+                        </div>
+                    </div>
+                </div>
+                <div id="optionsContainer">
+                    <!-- volume -->
+                    <div class="volume-section-container">
+                        <div class="mute-container option-container">
+                            <div>Mute</div>
+                            <input id="muteInput" type="checkbox" checked>
+                        </div>
+                        <div class="numeric-option-container option-container">
+                            <div class="option-label">Volume (%)</div>
+                            <input id="volumeRangeInput" type="range" min="0" value="20" max="100" step="1" class="numeric-option-range">
+                            <input id="volumeManualInput" value="20" class="numeric-option-manual">
+                        </div>
+                    </div>
+                    <!-- scroll direction -->
+                    <div class="numeric-option-container option-container">
+                        <div class="option-label">Scroll Direction</div>
+                        <div id="scrollOptionContainer">
+                            <div class="radio-option">
+                                <label for="scrollRadioDown">Down</label>
+                                <input id="scrollRadioDown" type="radio" value="down" name="scrollRadio" checked>
+                            </div>
+                            <div class="radio-option">
+                                <label for="scrollRadioUp">Up</label>
+                                <input id="scrollRadioUp" type="radio" value="up" name="scrollRadio">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- note width -->
+                    <!-- note height -->
+                    <div class="note-size-section-container option-container">
+                        <div class="keep-square-container">
+                            <div>Keep Square</div>
+                            <input id="keepSquareInput" type="checkbox" checked>
+                        </div>
+                        <div class="numeric-option-container">
+                            <div class="option-label">Note Width (px)</div>
+                            <input id="noteWidthRangeInput" type="range" min="1" value="50" max="180" step="1" class="numeric-option-range">
+                            <input id="noteWidthManualInput" value="50" class="numeric-option-manual">
+                        </div>
+                        <div class="numeric-option-container">
+                            <div class="option-label">Note Height (px)</div>
+                            <input id="noteHeightRangeInput" type="range" min="1" value="50" max="180" step="1" class="numeric-option-range">
+                            <input id="noteHeightManualInput" value="50" class="numeric-option-manual">
+                        </div>
+                    </div>
+                    <!-- lane gap -->
+                    <div class="numeric-option-container option-container">
+                        <div class="option-label">Lane Gap (px)</div>
+                        <input id="laneGapRangeInput" type="range" min="0" value="20" max="120" step="1" class="numeric-option-range">
+                        <input id="laneGapManualInput" value="20" class="numeric-option-manual">
+                    </div>
+                    <!-- receptor position -->
+                    <div class="numeric-option-container option-container">
+                        <div class="option-label">Receptor Position (%)</div>
+                        <input id="receptorPositionRangeInput" type="range" min="0" value="20" max="100" step="1" class="numeric-option-range">
+                        <input id="receptorPositionManualInput" value="20" class="numeric-option-manual">
+                    </div>
+                    <!-- scroll speed -->
+                    <div class="numeric-option-container option-container">
+                        <div class="option-label">Scroll Speed (px/sec)</div>
+                        <input id="scrollSpeedRangeInput" type="range" min="120" value="200" max="1600" step="1" class="numeric-option-range">
+                        <input id="scrollSpeedManualInput" value="200" class="numeric-option-manual">
+                    </div>
+                    <!-- audio offset -->
+                    <div class="numeric-option-container option-container">
+                        <div class="option-label">Audio Offset (ms)</div>
+                        <input id="audioOffsetInput" class="numeric-option-manual" value="0">
+                    </div>
+                    <!-- video offset -->
+                    <div class="numeric-option-container option-container">
+                        <div class="option-label">Video Offset (ms)</div>
+                        <input id="videoOffsetInput" class="numeric-option-manual" value="0">
+                    </div>
+                    <!-- disable judgement text -->
+                    <div class="numeric-option-container option-container">
+                        <div class="option-label">Disable Judgement Text</div>
+                        <input id="disableJudgementTextInput" type="checkbox">
+                    </div>
+                    <div id="keyBindingSectionContainer" class="key-binding-section-container">
+                        <!-- key binding 0 -->
+                        <div class="keybinding-option-container option-container">
+                            <div class="keybinding-option-label">Lane 1</div>
+                            <button id="bindingButtonLane0" class="keybinding-option-button">S</button>
+                        </div>
+                        <!-- key binding 1 -->
+                        <div class="keybinding-option-container option-container">
+                            <div class="keybinding-option-label">Lane 2</div>
+                            <button id="bindingButtonLane1" class="keybinding-option-button">D</button>
+                        </div>
+                        <!-- key binding 2 -->
+                        <div class="keybinding-option-container option-container">
+                            <div class="keybinding-option-label">Lane 3</div>
+                            <button id="bindingButtonLane2" class="keybinding-option-button">J</button>
+                        </div>
+                        <!-- key binding 3 -->
+                        <div class="keybinding-option-container option-container">
+                            <div class="keybinding-option-label">Lane 4</div>
+                            <button id="bindingButtonLane3" class="keybinding-option-button">K</button>
+                        </div>
+                        <!-- key binding quit -->
+                        <div class="keybinding-option-container option-container">
+                            <div class="keybinding-option-label">End Song</div>
+                            <button id="bindingButtonQuit" class="keybinding-option-button">Escape</button>
+                        </div>
+                        <!-- key binding restart -->
+                        <div class="keybinding-option-container option-container">
+                            <div class="keybinding-option-label">Restart Song</div>
+                            <button id="bindingButtonRestart" class="keybinding-option-button">Slash</button>
+                        </div>
+                    </div>
+                    <div class="numeric-option-container option-container">
+                        <button id="resetConfigButton" disabled>Reset Options</button>
+                    </div>
+                    <div id="creditsContainer">
+                        <div>Song: persistence (edited) by Jeko</div>
+                        <div>Stepfile charts by Edmspack</div>
+                        <div>All rights reserved</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="simple-ddr-clone/scripts/bundle.js"></script>
+</html>
