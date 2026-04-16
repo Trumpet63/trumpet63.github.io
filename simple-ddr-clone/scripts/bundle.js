@@ -767,6 +767,9 @@
   var nextKeyEventToProcess = 0;
   window.addEventListener("keydown", onKeydown);
   function onKeydown(event) {
+    if (event.code === "Space") {
+      event.preventDefault();
+    }
     if (event.repeat) {
       return;
     }
